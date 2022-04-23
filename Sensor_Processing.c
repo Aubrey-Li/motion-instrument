@@ -25,3 +25,41 @@ int compass_heading(float Mx, float My) {
     return retv;
 }
 
+int x_angle(float Ax, float Ay, float Az) {
+    double accel = pow(Ax*Ax + Ay*Ay + Az*Az, 0.5);
+    int retv;
+    if (Ax/accel > 1) {
+        retv = 0;
+    } else if (Ax/accel < -1) {
+        retv = 180;
+    } else {
+        retv = round(acos(Ax/accel) *180/pi);
+    }
+    if (Az < 0) {
+        retv *= -1;
+    }
+    if (retv < 0) {
+        retv += 360
+    }
+    return retv;
+}
+
+int y_angle(float Ax, float Ay, float Az) {
+    double accel = pow(Ax*Ax + Ay*Ay + Az*Az, 0.5);
+    int retv;
+    if (Ay/accel > 1) {
+        retv = 0;
+    } else if (Ay/accel < -1) {
+        retv = 180;
+    } else {
+        retv = round(acos(Ay/accel) *180/pi);
+    }
+    if (Az < 0) {
+        retv *= -1;
+    }
+    if (retv < 0) {
+        retv += 360
+    }
+    return retv;
+}
+
