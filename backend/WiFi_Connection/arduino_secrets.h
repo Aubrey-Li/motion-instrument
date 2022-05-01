@@ -1,2 +1,2 @@
-#define SECRET_SSID "RLAB"
-#define SECRET_PASS "metropolis"
+#define SECRET_SSID ""
+#define SECRET_PASS ""
