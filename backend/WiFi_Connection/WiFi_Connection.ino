@@ -11,6 +11,7 @@
 #include <ArduinoHttpClient.h>
 #include <WiFiNINA.h>
 #include <Arduino_LSM6DS3.h>
+#include "Sensor_Processing.h"
 #include "arduino_secrets.h"
 
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
@@ -63,20 +64,35 @@ void loop() {
 //  Serial.println("starting WebSocket client");
   client.begin();
   float x, y, z;
+  float a, b, c;
 
   while (client.connected()) {
 //    Serial.print("Sending hello ");
 //    Serial.println(count);
 
+//sent data format: x-angle y-angle Ax Ay Az Gx Gy Gz
     if (IMU.accelerationAvailable()) {
     IMU.readAcceleration(x, y, z);
+    IMU.readGyroscope(a, b, c);
+    float x_a = x_angle(x, y, z);
+    float y_a = y_angle(x, y, z);
 
     client.beginMessage(TYPE_TEXT);
+    client.print(x_a);
+    client.print('\t');
+    client.print(y_a);
+    client.print('\t');
     client.print(x);
     client.print('\t');
     client.print(y);
     client.print('\t');
     client.println(z);
+    client.print('\t');
+    client.print(a);
+    client.print('\t');
+    client.print(b);
+    client.print('\t');
+    client.println(c);
     client.endMessage();
   }
   }

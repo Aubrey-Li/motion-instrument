@@ -6,7 +6,7 @@
 
 
 float pi = 3.1415;
-int compass_heading(float Mx, float My) {
+float compass_heading(float Mx, float My) {
     int retv;
     if (Mx == 0) {
         if (My > 0) {
@@ -25,7 +25,7 @@ int compass_heading(float Mx, float My) {
     return retv;
 }
 
-int x_angle(float Ax, float Ay, float Az) {
+float x_angle(float Ax, float Ay, float Az) {
     double accel = pow(Ax*Ax + Ay*Ay + Az*Az, 0.5);
     int retv;
     if (Ax/accel > 1) {
@@ -44,7 +44,7 @@ int x_angle(float Ax, float Ay, float Az) {
     return retv;
 }
 
-int y_angle(float Ax, float Ay, float Az) {
+float y_angle(float Ax, float Ay, float Az) {
     double accel = pow(Ax*Ax + Ay*Ay + Az*Az, 0.5);
     int retv;
     if (Ay/accel > 1) {
