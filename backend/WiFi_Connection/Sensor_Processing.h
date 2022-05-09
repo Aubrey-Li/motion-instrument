@@ -9,6 +9,15 @@
 #define Sensor_Processing_h
 
 #include <stdio.h>
-int x_angle(float Ax, float Ay, float Az);
-int y_angle(float Ax, float Ay, float Az);
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+float x_angle(float Ax, float Ay, float Az);
+float y_angle(float Ax, float Ay, float Az);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* Sensor_Processing_h */
