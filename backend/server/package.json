@@ -1,0 +1,20 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "browser-sync start --server --files 'index.html', 'src/footdrum_web_worker.js'"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.5"
+  },
+  "dependencies": {
+    "web-worker": "^1.2.0",
+    "worker-thread": "^1.1.0",
+    "ws": "^8.6.0"
+  }
+}

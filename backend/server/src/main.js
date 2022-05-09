@@ -1,15 +1,20 @@
 // Importing the required modules
-const WebSocketServer = require('ws');
+import { WebSocketServer } from 'ws';
+import Worker from 'web-worker';
+
+const worker = new Worker('../src/footdrum_web_worker.cjs');
  
 // Creating a new websocket server
-const wss = new WebSocketServer.Server({ port: 8080 });
- 
+const wss = new WebSocketServer({ port: 8080 });
 // Creating connection using websocket
 wss.on("connection", ws => {
     console.log("new client connected");
     // sending message
     ws.on("message", data => {
-        console.log(`Client has sent us: ${data}`);
+        //console.log(`Client has sent us: ${data}`);
+        const nums_str = data.toString().split('\t');
+        //const nums = nums.map(x => Number(x));
+        worker.postMessage(nums_str[0]);
     });
     // handling what to do when clients disconnects from server
     ws.on("close", () => {
