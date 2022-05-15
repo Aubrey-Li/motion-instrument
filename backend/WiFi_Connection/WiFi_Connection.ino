@@ -19,7 +19,7 @@
 char ssid[] = SECRET_SSID;
 char pass[] = SECRET_PASS;
 
-char serverAddress[] = "138.16.161.207";  // server address
+char serverAddress[] = "138.16.161.219";  // server address
 int port = 8080;
 
 WiFiClient wifi;

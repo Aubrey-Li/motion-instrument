@@ -9,6 +9,7 @@ const wss = new WebSocketServer({ port: 8080 });
 // Creating connection using websocket
 wss.on("connection", ws => {
     console.log("new client connected");
+    
     // sending message
     ws.on("message", data => {
         //console.log(`Client has sent us: ${data}`);
