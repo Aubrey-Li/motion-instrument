@@ -2,7 +2,8 @@
 import { WebSocketServer } from 'ws';
 import Worker from 'web-worker';
 
-const worker = new Worker('../src/footdrum_web_worker.cjs');
+// const worker = new Worker('../src/footdrum_web_worker.cjs');
+const worker = new Worker('../src/instrument.cjs');
  
 // Creating a new websocket server
 const wss = new WebSocketServer({ port: 8080 });
@@ -14,8 +15,8 @@ wss.on("connection", ws => {
     ws.on("message", data => {
         //console.log(`Client has sent us: ${data}`);
         const nums_str = data.toString().split('\t');
-        //const nums = nums.map(x => Number(x));
-        worker.postMessage(nums_str[0]);
+        // sending the x, y coordinate to the worker
+        worker.postMessage([nums_str[0], nums_str[1]]);
     });
     // handling what to do when clients disconnects from server
     ws.on("close", () => {
