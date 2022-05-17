@@ -29,7 +29,10 @@
       var audioCtx;
       var x_val = 0;
       var y_val = 0;
-
+      var inst = 0
+      var count = 0
+      const instruments = ["sine", "square", "sawtooth", "triangle"]
+      const notes = [261.63, 293.66, 329.63, 349.23, 392, 440, 493.88]
       window.addEventListener("click", init);
 
       function init() {
@@ -39,36 +42,36 @@
 
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-        delay = audioCtx.createDelay(5);
-        delay.delayTime.value = 0.09;
-        delayFeedback = audioCtx.createGain();
-        delayFeedback.gain.value = 0.79;
+        // delay = audioCtx.createDelay(5);
+        // delay.delayTime.value = 0.09;
+        // delayFeedback = audioCtx.createGain();
+        // delayFeedback.gain.value = 0.79;
 
         volume = audioCtx.createGain();
 
         sinea = audioCtx.createOscillator();
         sinea.frequency.value = 440;
-        sinea.type = "sine";
+        sinea.type = "sawtooth";
         sinea.start();
         sinea.connect(volume);
 
-        sineb = audioCtx.createOscillator();
-        sineb.frequency.value = 523.25;
-        sineb.type = "sine";
-        sineb.start();
-        sineb.connect(volume);
+        // sineb = audioCtx.createOscillator();
+        // sineb.frequency.value = 523.25;
+        // sineb.type = "sine";
+        // sineb.start();
+        // sineb.connect(volume);
 
-        sinec = audioCtx.createOscillator();
-        sinec.frequency.value = 698.46;
-        sinec.type = "sine";
-        sinec.start();
-        sinec.connect(volume);
+        // sinec = audioCtx.createOscillator();
+        // sinec.frequency.value = 698.46;
+        // sinec.type = "sine";
+        // sinec.start();
+        // sinec.connect(volume);
 
-        volume.connect(delay);
+        //volume.connect(delay);
         volume.connect(audioCtx.destination);
-        delayFeedback.connect(volume);
-        delay.connect(delayFeedback);
-        delayFeedback.connect(delay);
+        // delayFeedback.connect(volume);
+        // delay.connect(delayFeedback);
+        // delayFeedback.connect(delay);
 
         volume.gain.value = 0.2;
         console.log("got here!");
@@ -92,14 +95,26 @@
 
       ws.addEventListener("message", function (e) {
         const msg = e.data;
-        console.log(e.data);
+        count += 1;
+        //console.log(e.data);
         const nums_str = msg.split('\t');
         x_val = parseFloat(nums_str[0]);
         y_val = parseFloat(nums_str[1]);
-        sinea.frequency.value = (x_val / 1000.0) * 440 + 400;
-        sineb.frequency.value = (x_val / 1000.0) * 523.25  + 400;
-        sinec.frequency.value = (x_val / 1000.0) * 698.46 + 400;
-        delayFeedback.gain.value = Math.max(0.7, y_val / 700.0);
+        z_accel = parseFloat(nums_str[4])
+        sinea.frequency.value = notes[Math.floor(x_val/40) % 7 ];
+        volume.gain.value = y_val/360;
+        if (z_accel > 2 && count % 10 == 0) {
+          inst += 1;
+          sinea.type = instruments[inst % 4];
+          console.log(instruments[inst % 4]);
+
+
+        }
+
+
+        //sineb.frequency.value = (x_val / 1000.0) * 523.25  + 400;
+        //sinec.frequency.value = (x_val / 1000.0) * 698.46 + 400;
+        //delayFeedback.gain.value = Math.max(0.7, y_val / 700.0);
       });
     </script>
   </body>
