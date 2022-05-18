@@ -32,7 +32,7 @@
       </video>
 
       <div class="header">
-        <h1>M Shock</h1>
+        <h1>Airstrumment</h1>
         <p>Revolutionize the way you make music</p>
         <button class="mute" data-muted="false">
           <span></span>
@@ -57,8 +57,8 @@
         </button>
       </div>
     </div>
-    <audio id="mp32" crossorigin="anonymous" src="drum.mp3" autoplay></audio>
-    <audio id="mp31" crossorigin="anonymous" src="cymbal.mp3" autoplay></audio>
+    <!-- <audio id="mp32" crossorigin="anonymous" src="drum.mp3" autoplay></audio> -->
+    <!-- <audio id="mp31" crossorigin="anonymous" src="cymbal.mp3" autoplay></audio> -->
     <!-- <button class="mute" data-muted="false">Mute</button>
     <button class="violin">Violin</button> -->
     <script>
@@ -82,24 +82,9 @@
       const instruments = ["sine", "square", "sawtooth", "triangle"];
       const notes = [261.63, 293.66, 329.63, 349.23, 392, 440, 493.88];
       window.addEventListener("click", init);
-      //window.addEventListener("click", drumHandler);
       const ii = document.querySelector(".violin");
       const jj = document.querySelector(".drums");
       instrument_type = 0;
-      //       //----init for drum
-      //       // Importing the required modules
-
-      // // const playButton = document.querySelector('button');
-      // // console.log("playbutton", playButton);
-      //       var drumstate = 0;
-      //       var initilaize = 1;
-      //       var audioContext = null;
-      //       var drumElement = null;
-      //       var drumTrack = null;
-      //       var snareTrack = null;
-      //       var AudioCC = null;
-      //       var activated = 0;
-      // playButton.addEventListener('click', drumHandler);
       ii.onclick = function () {
         volume.gain.value = 0.2;
         instrument_type = 0;
@@ -117,11 +102,6 @@
 
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-        // delay = audioCtx.createDelay(5);
-        // delay.delayTime.value = 0.09;
-        // delayFeedback = audioCtx.createGain();
-        // delayFeedback.gain.value = 0.79;
-
         volume = audioCtx.createGain();
 
         sinea = audioCtx.createOscillator();
@@ -130,23 +110,7 @@
         sinea.start();
         sinea.connect(volume);
 
-        // sineb = audioCtx.createOscillator();
-        // sineb.frequency.value = 523.25;
-        // sineb.type = "sine";
-        // sineb.start();
-        // sineb.connect(volume);
-
-        // sinec = audioCtx.createOscillator();
-        // sinec.frequency.value = 698.46;
-        // sinec.type = "sine";
-        // sinec.start();
-        // sinec.connect(volume);
-
-        //volume.connect(delay);
         volume.connect(audioCtx.destination);
-        // delayFeedback.connect(volume);
-        // delay.connect(delayFeedback);
-        // delayFeedback.connect(delay);
 
         volume.gain.value = 0.2;
         console.log("got here!");
@@ -185,11 +149,11 @@
           }
         } else {
           console.log(angle_y);
-          if (angle_y > 250) {
+          if (angle_y > 140) {
             // TO-DO: check value based on band design
             console.log("b");
             activated = 1;
-          } else if (angle_y < 110) {
+          } else if (angle_y < 50) {
             console.log("c");
             activated = 2;
           } else {
@@ -208,7 +172,7 @@
             } else if (activated == 2) {
               console.log("hear the kick");
               console.log(`[From Main]: hello`);
-              test = new Audio("drum.mp3");
+              test = new Audio("cymbal.mp3");
               test.play();
               //snareElement.play()
               activated = 0;
@@ -217,13 +181,7 @@
             }
           }
         }
-
-        //sineb.frequency.value = (x_val / 1000.0) * 523.25  + 400;
-        //sinec.frequency.value = (x_val / 1000.0) * 698.46 + 400;
-        //delayFeedback.gain.value = Math.max(0.7, y_val / 700.0);
       });
-
-      // button.addEventListener('click', playDrum(x_val, y_val));
     </script>
   </body>
 </html>
