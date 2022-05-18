@@ -24,7 +24,7 @@ Server Connection:
 1. Make sure node is installed locally
 2. Under src, `node main.js` to start the server
 
-==Instrument Design:
+== Instrument Design:
 1. Electronic: Uses angle in x and y planes to control pitch and volume. Jerk band downwards to toggle between four instrument sounds.
 2. Drum: A simple drum to drum along to tracks, twisting wrist forward activated kick on return, while twisting wrist backwards activates snare on return.
 
