@@ -8,7 +8,7 @@ import { WebSocketServer } from 'ws';
 // Creating a new websocket server
 const wss = new WebSocketServer({ port: 8080 });
 
-var webSocketList = {};
+var webSocketList = [];
 var id = 0;
 // Creating connection using websocket
 wss.on("connection", ws => {
