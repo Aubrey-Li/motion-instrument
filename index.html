@@ -80,7 +80,7 @@
       var inst = 0;
       var count = 0;
       const instruments = ["sine", "square", "sawtooth", "triangle"];
-      const notes = [261.63, 293.66, 329.63, 349.23, 392, 440, 493.88];
+      const notes = [261.63, 293.66, 329.63, 349.23, 392, 440, 493.88, 523.25, 554.27, 587.33, 622.25, 659.25, 698.46, 739.99, 783.99, 830.61, 880, 932];
       window.addEventListener("click", init);
       const ii = document.querySelector(".violin");
       const jj = document.querySelector(".drums");
@@ -129,7 +129,7 @@
           mute.setAttribute("data-muted", "false");
         }
       };
-
+      test = new Audio("drum.mp3");
       ws.addEventListener("message", function (e) {
         const msg = e.data;
         count += 1;
@@ -140,7 +140,7 @@
         angle_y = y_val;
         z_accel = parseFloat(nums_str[4]);
         if (instrument_type == 0) {
-          sinea.frequency.value = notes[Math.floor(x_val / 40) % 7];
+          sinea.frequency.value = notes[Math.floor(x_val / 20) % 18];
           volume.gain.value = y_val / 360;
           if (z_accel > 2 && count % 10 == 0) {
             inst += 1;
@@ -153,7 +153,7 @@
             // TO-DO: check value based on band design
             console.log("b");
             activated = 1;
-          } else if (angle_y < 50) {
+          } else if (angle_y < 40) {
             console.log("c");
             activated = 2;
           } else {
@@ -165,15 +165,15 @@
             // }
             if (activated == 1) {
               console.log("hear the drum!");
-              test = new Audio("drum.mp3");
+              
               test.play();
               //drumElement.play();
               activated = 0;
             } else if (activated == 2) {
               console.log("hear the kick");
               console.log(`[From Main]: hello`);
-              test = new Audio("cymbal.mp3");
-              test.play();
+              test1 = new Audio("cymbal.mp3");
+              test1.play();
               //snareElement.play()
               activated = 0;
             } else {
