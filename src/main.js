@@ -8,12 +8,12 @@ import { WebSocketServer } from 'ws';
 // Creating a new websocket server
 const wss = new WebSocketServer({ port: 8080 });
 
-var webSocketList = [];
+var webSocketList = {};
 var id = 0;
 // Creating connection using websocket
 wss.on("connection", ws => {
     console.log("new client connected, client id:", id);
-    webSocketList.push(ws);
+    webSocketList[id] = ws;
     id++;
     // sending message
     ws.on("message", data => {

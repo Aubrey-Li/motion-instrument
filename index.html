@@ -2,16 +2,65 @@
   <head>
     <title>Motion Instrument</title>
     <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 " />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
+    />
+    <!-- Google Fonts AudioWide-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
+      rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css" />
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="./app.css" />
   </head>
 
   <body>
-    <div id="app"></div>
-    <h1>Basic motion instrument demo</h1>
-    <button class="mute" data-muted="false">Mute</button>
-    <!-- <audio id = "mp32" crossOrigin = "anonymous" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3" autoplay></audio> -->
-    <!-- <audio id = "mp31" crossOrigin = "anonymous" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3" autoplay></audio> -->
-    <!-- <script src="src/footdrum_web_worker.cjs"></script> -->
-    <!-- <script src="src/instrument.cjs"></script> -->
+    <div class="video-wrapper">
+      <video playsinline autoplay muted loop>
+        <source
+          class="h-100"
+          src="https://mdbootstrap.com/img/video/Lines.mp4"
+          type="video/mp4"
+        />
+      </video>
+
+      <div class="header">
+        <h1>M Shock</h1>
+        <p style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Revolutionize the way you make music</p>
+        <button class="mute" data-muted="false">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span>Mute</span>
+        </button>
+        <button class="button">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span>Electronic</span>
+        </button>
+        <button class="violin">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span>Synthesized</span>
+        </button>
+      </div>
+    </div>
+    <!-- <button class="mute" data-muted="false">Mute</button>
+    <button class="violin">Violin</button> -->
     <script>
       const ws = new WebSocket("ws://localhost:8080");
 
@@ -82,25 +131,30 @@
         if (mute.getAttribute("data-muted") === "false") {
           volume.disconnect(audioCtx.destination);
           mute.setAttribute("data-muted", "true");
-          mute.innerHTML = "Unmute";
         } else {
           volume.connect(audioCtx.destination);
           mute.setAttribute("data-muted", "false");
-          mute.innerHTML = "Mute";
         }
+      };
+
+      const violin = document.querySelector("./violin");
+      violin.onlick = function () {
+        someglobalvar = 1;
       };
 
       ws.addEventListener("message", function (e) {
         const msg = e.data;
         console.log(e.data);
-        const nums_str = msg.split('\t');
+        const nums_str = msg.split("\t");
         x_val = parseFloat(nums_str[0]);
         y_val = parseFloat(nums_str[1]);
         sinea.frequency.value = (x_val / 1000.0) * 440 + 400;
-        sineb.frequency.value = (x_val / 1000.0) * 523.25  + 400;
+        sineb.frequency.value = (x_val / 1000.0) * 523.25 + 400;
         sinec.frequency.value = (x_val / 1000.0) * 698.46 + 400;
         delayFeedback.gain.value = Math.max(0.7, y_val / 700.0);
       });
+
+      // button.addEventListener('click', playDrum(x_val, y_val));
     </script>
   </body>
 </html>

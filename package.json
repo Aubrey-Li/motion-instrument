@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "browser-sync start --server --files 'index.html', 'src/footdrum_web_worker.cjs'"
+    "dev": "browser-sync start --server --files 'index.html', 'src/instrument.cjs'"
   },
   "author": "",
   "license": "ISC",
