@@ -9,15 +9,13 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
     />
-    <!-- Google Fonts AudioWide-->
+    <!-- Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Water+Brush&display=swap"
       rel="stylesheet"
     />
-    <!-- MDB -->
-    <link rel="stylesheet" href="css/mdb.min.css" />
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="./app.css" />
@@ -35,7 +33,7 @@
 
       <div class="header">
         <h1>M Shock</h1>
-        <p style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Revolutionize the way you make music</p>
+        <p>Revolutionize the way you make music</p>
         <button class="mute" data-muted="false">
           <span></span>
           <span></span>
@@ -59,8 +57,8 @@
         </button>
       </div>
     </div>
-    <audio id = "mp32" crossOrigin = "anonymous" src="drum.mp3" autoplay></audio> 
-    <audio id = "mp31" crossOrigin = "anonymous" src="cymbal.mp3" autoplay></audio> 
+    <audio id="mp32" crossorigin="anonymous" src="drum.mp3" autoplay></audio>
+    <audio id="mp31" crossorigin="anonymous" src="cymbal.mp3" autoplay></audio>
     <!-- <button class="mute" data-muted="false">Mute</button>
     <button class="violin">Violin</button> -->
     <script>
@@ -68,7 +66,7 @@
       ws.addEventListener("open", () => {
         console.log("web client: handshake! We are connected");
       });
-      //---init  for violin
+      //---init for violin
       let isAppInit = false;
       var sinea = null;
       var sineb = null;
@@ -79,38 +77,38 @@
       var audioCtx;
       var x_val = 0;
       var y_val = 0;
-      var inst = 0
-      var count = 0
-      const instruments = ["sine", "square", "sawtooth", "triangle"]
-      const notes = [261.63, 293.66, 329.63, 349.23, 392, 440, 493.88]
+      var inst = 0;
+      var count = 0;
+      const instruments = ["sine", "square", "sawtooth", "triangle"];
+      const notes = [261.63, 293.66, 329.63, 349.23, 392, 440, 493.88];
       window.addEventListener("click", init);
       //window.addEventListener("click", drumHandler);
       const ii = document.querySelector(".violin");
       const jj = document.querySelector(".drums");
       instrument_type = 0;
-//       //----init for drum
-//       // Importing the required modules
+      //       //----init for drum
+      //       // Importing the required modules
 
-// // const playButton = document.querySelector('button');
-// // console.log("playbutton", playButton);
-//       var drumstate = 0;
-//       var initilaize = 1;
-//       var audioContext = null;
-//       var drumElement = null;
-//       var drumTrack = null;
-//       var snareTrack = null;
-//       var AudioCC = null;
-//       var activated = 0;
-// playButton.addEventListener('click', drumHandler);
-      ii.onclick = function() {
+      // // const playButton = document.querySelector('button');
+      // // console.log("playbutton", playButton);
+      //       var drumstate = 0;
+      //       var initilaize = 1;
+      //       var audioContext = null;
+      //       var drumElement = null;
+      //       var drumTrack = null;
+      //       var snareTrack = null;
+      //       var AudioCC = null;
+      //       var activated = 0;
+      // playButton.addEventListener('click', drumHandler);
+      ii.onclick = function () {
         volume.gain.value = 0.2;
         instrument_type = 0;
-      }
-      jj.onclick = function()  {
+      };
+      jj.onclick = function () {
         volume.gain.value = 0;
-        
+
         instrument_type = 1;
-      }
+      };
 
       function init() {
         if (isAppInit) {
@@ -157,7 +155,7 @@
       }
 
       const mute = document.querySelector(".mute");
-      
+
       mute.onclick = function () {
         if (mute.getAttribute("data-muted") === "false") {
           volume.disconnect(audioCtx.destination);
@@ -168,24 +166,18 @@
         }
       };
 
-      const violin = document.querySelector("./violin");
-      violin.onlick = function () {
-        someglobalvar = 1;
-      };
-
       ws.addEventListener("message", function (e) {
         const msg = e.data;
         count += 1;
         //console.log(e.data);
-        const nums_str = msg.split('\t');
+        const nums_str = msg.split("\t");
         x_val = parseFloat(nums_str[0]);
         y_val = parseFloat(nums_str[1]);
         angle_y = y_val;
-        z_accel = parseFloat(nums_str[4])
+        z_accel = parseFloat(nums_str[4]);
         if (instrument_type == 0) {
-          
-          sinea.frequency.value = notes[Math.floor(x_val/40) % 7 ];
-          volume.gain.value = y_val/360;
+          sinea.frequency.value = notes[Math.floor(x_val / 40) % 7];
+          volume.gain.value = y_val / 360;
           if (z_accel > 2 && count % 10 == 0) {
             inst += 1;
             sinea.type = instruments[inst % 4];
@@ -193,44 +185,38 @@
           }
         } else {
           console.log(angle_y);
-          if (angle_y > 250) { // TO-DO: check value based on band design
+          if (angle_y > 250) {
+            // TO-DO: check value based on band design
             console.log("b");
             activated = 1;
           } else if (angle_y < 110) {
             console.log("c");
             activated = 2;
-          } else { //autoplay policy
+          } else {
+            //autoplay policy
             console.log("d");
-        
+
             // if (audioContext.state === 'suspended') {
             //   audioContext.resume();
             // }
             if (activated == 1) {
-              console.log('hear the drum!');
+              console.log("hear the drum!");
               test = new Audio("drum.mp3");
               test.play();
               //drumElement.play();
               activated = 0;
-            
-
             } else if (activated == 2) {
-              console.log('hear the kick');
+              console.log("hear the kick");
               console.log(`[From Main]: hello`);
               test = new Audio("drum.mp3");
               test.play();
               //snareElement.play()
               activated = 0;
-            
-
             } else {
               console.log("activated is 0");
             }
-
           }
         }
-
-        
-
 
         //sineb.frequency.value = (x_val / 1000.0) * 523.25  + 400;
         //sinec.frequency.value = (x_val / 1000.0) * 698.46 + 400;
