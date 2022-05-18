@@ -13,16 +13,18 @@ var id = 0;
 // Creating connection using websocket
 wss.on("connection", ws => {
     console.log("new client connected, client id:", id);
-    webSocketList[id] = ws;
+    // connect web client before arduino
+    webSocketList.push(ws);
     id++;
+    console.log(webSocketList.length);
     // sending message
     ws.on("message", data => {
-        console.log(`Client has sent us: ${data}`);
+        // console.log(`Client has sent us: ${data}`);
         const nums_str = data.toString();
         // console.log(nums_str[0]);
         // sending the x, y coordinate to the worker
-        if (webSocketList.length == 2) {
-            webSocketList[1].send(nums_str);
+        if (webSocketList.length >= 2) {
+            webSocketList[0].send(nums_str);
         }
     });
     // handling what to do when clients disconnects from server
